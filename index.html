@@ -1,0 +1,18 @@
+<input type="file" id="pic" accept="image/*">
+<p id="info"></p>
+
+<script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/lite.umd.js"></script>
+<script>
+document.getElementById("pic").onchange = async function (e) {
+  const file = e.target.files[0];
+  const gps = await exifr.gps(file);
+  const info = document.getElementById("info");
+  if (gps) {
+    info.innerHTML = "الموقع: " + gps.latitude + ", " + gps.longitude +
+      '<br><a target="_blank" href="https://www.google.com/maps?q=' +
+      gps.latitude + "," + gps.longitude + '">افتح على الخريطة</a>';
+  } else {
+    info.innerText = "الصورة مفيهاش بيانات موقع";
+  }
+};
+</script>
